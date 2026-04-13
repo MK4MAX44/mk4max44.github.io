@@ -40,7 +40,12 @@ export const siteConfig: SiteConfig = {
 };
 
 export const navBarConfig: NavBarConfig = {
-	links: [LinkPreset.Home, LinkPreset.Archive, LinkPreset.About],
+	links: [
+		LinkPreset.Home,
+		{ name: "진로 탐색", url: "/document/search_career_path/" },
+		LinkPreset.Archive,
+		LinkPreset.About,
+	],
 };
 
 export const profileConfig: ProfileConfig = {
