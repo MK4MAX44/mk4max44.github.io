@@ -53,9 +53,15 @@ onMount(async () => {
 	}
 
 	if (categories.length > 0) {
-		filteredPosts = filteredPosts.filter(
-			(post) => post.data.category && categories.includes(post.data.category),
-		);
+		filteredPosts = filteredPosts.filter((post) => {
+			if (post.data.category && categories.includes(post.data.category)) {
+				return true;
+			}
+			if (Array.isArray(post.data.categories)) {
+				return post.data.categories.some((category) => categories.includes(category));
+			}
+			return false;
+		});
 	}
 
 	if (uncategorized) {
