@@ -22,7 +22,11 @@ export function getTagUrl(tag: string): string {
 }
 
 export function getCategoryUrl(category: string | null): string {
-	if (!category || category.trim() === "" || category.trim().toLowerCase() === i18n(I18nKey.uncategorized).toLowerCase()) {
+	if (
+		!category ||
+		category.trim() === "" ||
+		category.trim().toLowerCase() === i18n(I18nKey.uncategorized).toLowerCase()
+	) {
 		return url("/archive/");
 	}
 	return url(`/archive/?category=${encodeURIComponent(category.trim())}`);
