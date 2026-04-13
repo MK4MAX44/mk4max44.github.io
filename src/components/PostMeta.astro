@@ -26,10 +26,17 @@ const {
 } = Astro.props;
 const className = Astro.props.class;
 const categoryList = Array.isArray(categories)
-	? categories.map((category) => category?.trim()).filter((category) => category)
+	? categories
+			.map((category) => category?.trim())
+			.filter((category) => category)
 	: [];
 
-if (category && typeof category === "string" && category.trim() !== "" && !categoryList.includes(category.trim())) {
+if (
+	category &&
+	typeof category === "string" &&
+	category.trim() !== "" &&
+	!categoryList.includes(category.trim())
+) {
 	categoryList.unshift(category.trim());
 }
 ---

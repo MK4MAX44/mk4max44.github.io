@@ -85,31 +85,35 @@ export async function getCategoryList(): Promise<Category[]> {
 	const count: { [key: string]: number } = {};
 	const uncategorizedKey = i18n(I18nKey.uncategorized);
 
-	allBlogPosts.forEach((post: { data: { category?: string | null; categories?: string[] } }) => {
-		const categoryNames = new Set<string>();
+	allBlogPosts.forEach(
+		(post: { data: { category?: string | null; categories?: string[] } }) => {
+			const categoryNames = new Set<string>();
 
-		if (post.data.category) {
-			categoryNames.add(post.data.category.trim());
-		}
+			if (post.data.category) {
+				categoryNames.add(post.data.category.trim());
+			}
 
-		if (Array.isArray(post.data.categories)) {
-			post.data.categories
-				.map((category) => category.trim())
-				.filter((category) => category !== "")
-				.forEach((category) => {
-					categoryNames.add(category);
-				});
-		}
+			if (Array.isArray(post.data.categories)) {
+				post.data.categories
+					.map((category) => category.trim())
+					.filter((category) => category !== "")
+					.forEach((category) => {
+						categoryNames.add(category);
+					});
+			}
 
-		if (categoryNames.size === 0) {
-			count[uncategorizedKey] = count[uncategorizedKey] ? count[uncategorizedKey] + 1 : 1;
-			return;
-		}
+			if (categoryNames.size === 0) {
+				count[uncategorizedKey] = count[uncategorizedKey]
+					? count[uncategorizedKey] + 1
+					: 1;
+				return;
+			}
 
-		categoryNames.forEach((categoryName) => {
-			count[categoryName] = count[categoryName] ? count[categoryName] + 1 : 1;
-		});
-	});
+			categoryNames.forEach((categoryName) => {
+				count[categoryName] = count[categoryName] ? count[categoryName] + 1 : 1;
+			});
+		},
+	);
 
 	const lst = Object.keys(count).sort((a, b) => {
 		return a.toLowerCase().localeCompare(b.toLowerCase());
