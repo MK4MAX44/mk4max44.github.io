@@ -12,7 +12,6 @@ export let sortedPosts: Post[] = [];
 const params = new URLSearchParams(window.location.search);
 tags = params.has("tag") ? params.getAll("tag") : [];
 categories = params.has("category") ? params.getAll("category") : [];
-const uncategorized = params.get("uncategorized");
 
 interface Post {
 	slug: string;
@@ -62,10 +61,6 @@ onMount(async () => {
 			}
 			return false;
 		});
-	}
-
-	if (uncategorized) {
-		filteredPosts = filteredPosts.filter((post) => !post.data.category);
 	}
 
 	const grouped = filteredPosts.reduce(
