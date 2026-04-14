@@ -29,3 +29,6 @@ yarn.lock
 # ide
 .idea
 *.iml
+
+# claude local settings
+.claude/settings.local.json
