@@ -1,0 +1,36 @@
+---
+// Utterances comment system
+// 사용하려면 https://github.com/apps/utterances 에서 앱 설치 필요
+---
+
+<div class="card-base px-6 md:px-9 py-6 mt-4">
+    <div id="utterances-container"></div>
+</div>
+
+<script>
+    function loadComments() {
+        const container = document.getElementById('utterances-container');
+        if (!container) return;
+
+        const isDark = document.documentElement.classList.contains('dark');
+        const theme = isDark ? 'github-dark' : 'github-light';
+
+        const script = document.createElement('script');
+        script.src = 'https://utteranc.es/client.js';
+        script.setAttribute('repo', 'MK4MAX44/mk4max44.github.io');
+        script.setAttribute('issue-term', 'pathname');
+        script.setAttribute('theme', theme);
+        script.setAttribute('crossorigin', 'anonymous');
+        script.async = true;
+
+        container.innerHTML = '';
+        container.appendChild(script);
+    }
+
+    // 초기 로드
+    loadComments();
+
+    // 다크모드 전환 시 테마 동기화
+    const observer = new MutationObserver(() => loadComments());
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+</script>
