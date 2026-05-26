@@ -1072,20 +1072,28 @@ def make(path):
     # ── 30. References ───────────────────────────────────────────────
     slide(c, 'References', [
         '[1]  Adhikari et al., "PolicyPulse: Precision Semantic Role Extraction for Enhanced Privacy Policy Comprehension," NDSS 2025.',
+        '--★ 이 발표의 주요 논문. NDSS 2025 채택. 코드: github.com/crisp-du/ppevo',
         '',
         '[2]  Harkous et al., "Polisis: Automated Analysis and Presentation of Privacy Policies Using Deep Learning," USENIX Security 2018.',
+        '--OPP-115 기반 딥러닝 분류. 107개 세부 카테고리. 단락 수준 분류 도구의 대표 사례',
         '',
         '[3]  Cui et al., "PoliGraph: Automated Privacy Policy Analysis using Knowledge Graphs," USENIX Security 2023.',
+        '--NER + 지식 그래프 기반. 데이터 관계 추출 특화. 역할 추출은 제한적',
         '',
         '[4]  Wilson et al., "The Creation and Analysis of a Website Privacy Policy Corpus (OPP-115)," ACL 2016.',
+        '--PolicyPulse 학습 데이터 기반. 115개 정책 / 12개 카테고리 / 수동 주석 공개 데이터셋',
         '',
         '[5]  Yang et al., "XLNet: Generalized Autoregressive Pretraining for Language Understanding," NeurIPS 2019.',
+        '--PolicyPulse Step 2 분류기 기반 모델. 순열 기반 언어 모델링으로 BERT 한계 보완',
         '',
         '[6]  Bhatia et al., "Mining Privacy Goals from Privacy Policies Using Hybridized Task Analysis," ACM TOCHI 2016.',
+        '-->>PurPliance 선행 연구. SRL을 처음 개인정보처리방침에 적용한 연구. 목적절 한정',
         '',
-        '[7]  Lippi et al., "CLAUDETTE: An Automated Detector of Potentially Unfair Clauses in Online Terms of Service," AI & Law 2019.',
+        '[7]  McDonald & Cranor, "The Cost of Reading Privacy Policies," I/S: A Journal of Law and Policy 2008.',
+        '--연간 76일 소요 추산 연구. 개인정보처리방침 자동 분석 연구의 출발점이 된 논문',
         '',
         '[8]  Princeton Privacy Crawl (PPCrawl) — github.com/citp/privacy-crawl',
+        '--Step 4 대규모 분석에 사용된 130만+ 사이트 정책 크롤링 데이터셋. 공개 접근 가능',
     ], 30)
 
     c.save()
