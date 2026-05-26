@@ -96,10 +96,42 @@ git stash pop               # 저장해둔 변경사항 꺼내기
 ### learngitbranching에서 배운 것들
 
 ```bash
-git rebase 브랜치명         # 내 커밋들을 다른 브랜치 위에 다시 쌓기
-git cherry-pick 커밋해시    # 원하는 커밋만 골라서 가져오기
-git checkout HEAD~2         # HEAD에서 2단계 전 커밋으로 이동
-git branch -f main HEAD~3   # 브랜치를 특정 커밋으로 강제 이동
+# rebase & cherry-pick
+git rebase 브랜치명              # 내 커밋들을 다른 브랜치 위에 다시 쌓기
+git rebase main bugFix           # bugFix를 main 위에 리베이스
+git rebase -i HEAD~3             # 인터랙티브 리베이스 (순서 변경·삭제 등)
+git cherry-pick 커밋해시          # 원하는 커밋만 골라서 가져오기
+git cherry-pick C3 C4 C7         # 여러 커밋 한번에 가져오기
+```
+
+```bash
+# 상대 참조 & 브랜치 이동
+git checkout HEAD~2              # HEAD에서 2단계 전 커밋으로 이동
+git checkout 브랜치명^           # 브랜치의 부모 커밋으로 이동
+git branch -f main HEAD~3        # 브랜치를 특정 커밋으로 강제 이동
+```
+
+```bash
+# 커밋 수정 & 되돌리기
+git commit --amend               # 가장 최근 커밋 수정
+git revert HEAD                  # 커밋을 되돌리는 새 커밋 만들기 (원격에 안전)
+```
+
+```bash
+# 태그
+git tag v1 C2                    # 특정 커밋에 태그 달기
+git tag v1                       # 현재 HEAD에 태그 달기
+```
+
+```bash
+# 원격 고급
+git push origin foo:main         # 로컬 foo를 원격 main으로 push
+git push origin :foo             # 원격 foo 브랜치 삭제
+git fetch origin c3:foo          # 원격 c3을 로컬 foo로 fetch
+git fetch origin :bar            # 로컬 bar 브랜치 생성
+git pull --rebase                # fetch 후 merge 대신 rebase
+git pull origin c3:foo           # fetch + merge, refspec 지정
+git checkout -b side o/main      # 원격 브랜치 추적하는 새 브랜치 만들기
 ```
 
 `rebase`랑 `cherry-pick`은 개념은 이해했는데 실제로 언제 쓰는지 감을 잡는 게 좀 걸렸다. 특히 `cherry-pick`은 커밋 해시*(각 커밋에 붙는 고유 ID)* 를 직접 지정해야 해서 처음엔 헷갈렸다.
