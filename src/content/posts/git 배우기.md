@@ -37,10 +37,72 @@ Push Main! 문제에서 한 번 막혔는데 뭔가 main 브랜치가 원격이�
 
 ---
 
+## 지금까지 써본 명령어 정리
+
+공부하면서 실제로 쓴 것들 모아봤다.
+
+### 기본 작업 흐름
+
+```bash
+git status                  # 현재 변경된 파일 확인
+git add 파일명              # 특정 파일 스테이징
+git add .                   # 변경된 파일 전부 스테이징
+git commit -m "메시지"      # 커밋 (스냅샷 저장)
+git push origin main        # 원격 저장소에 올리기
+git pull                    # 원격 변경사항 가져와서 합치기
+```
+
+### 로그 & 상태 확인
+
+```bash
+git log                     # 커밋 히스토리 보기
+git log --oneline           # 한 줄씩 간략하게 보기
+git diff                    # 스테이징 안 된 변경사항 확인
+git diff --staged           # 스테이징된 변경사항 확인
+```
+
+### 브랜치
+
+```bash
+git branch                  # 브랜치 목록 확인
+git branch 이름             # 새 브랜치 만들기
+git checkout 이름           # 브랜치 이동
+git checkout -b 이름        # 만들면서 바로 이동
+git merge 브랜치명          # 현재 브랜치에 다른 브랜치 합치기
+```
+
+### 되돌리기
+
+```bash
+git reset HEAD~1            # 마지막 커밋 취소 (변경사항은 유지)
+git reset --hard HEAD~1     # 마지막 커밋 완전히 되돌리기 (위험)
+git revert 커밋해시         # 커밋을 되돌리는 새 커밋 만들기
+```
+
+### 원격 관련
+
+```bash
+git fetch                   # 원격 변경사항 가져오기만 (합치지 않음)
+git push -u origin 브랜치명 # 처음 push 할 때 upstream 설정
+```
+
+### learngitbranching에서 배운 것들
+
+```bash
+git rebase 브랜치명         # 내 커밋들을 다른 브랜치 위에 다시 쌓기
+git cherry-pick 커밋해시    # 원하는 커밋만 골라서 가져오기
+git checkout HEAD~2         # HEAD에서 2단계 전 커밋으로 이동
+git branch -f main HEAD~3   # 브랜치를 특정 커밋으로 강제 이동
+```
+
+`rebase`랑 `cherry-pick`은 개념은 이해했는데 실제로 언제 쓰는지 감을 잡는 게 좀 걸렸다. 특히 `cherry-pick`은 커밋 해시*(각 커밋에 붙는 고유 ID)* 를 직접 지정해야 해서 처음엔 헷갈렸다.
+
+---
+
 ## 느낀 점
 
 솔직히 말하면 git을 1년 넘게 쓰면서 브랜치*(작업을 독립적으로 나눠서 진행할 수 있는 줄기)* 를 제대로 써본 적이 거의 없었다. 그냥 main 하나에 다 올렸었는데, 이번에 공부하면서 왜 브랜치를 쓰는지, rebase랑 merge*(두 브랜치를 합치는 것)* 가 어떻게 다른지 조금은 감이 온 것 같다.
 
 게임처럼 만들어놔서 그런지 질리지 않고 할 수 있는 것 같다.
 
-다음엔 실제 프로젝트에서 브랜치 제대로 나눠서 써보는 걸 목표로 해봐야겠다.
+다음엔 실제 프로젝트에서 브랜치 제대로 나눠서 써보는 걸 목표로 해봐야겠다
