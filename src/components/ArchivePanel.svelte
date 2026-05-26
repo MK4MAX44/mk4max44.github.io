@@ -57,7 +57,9 @@ onMount(async () => {
 				return true;
 			}
 			if (Array.isArray(post.data.categories)) {
-				return post.data.categories.some((category) => categories.includes(category));
+				return post.data.categories.some((category) =>
+					categories.includes(category),
+				);
 			}
 			return false;
 		});
