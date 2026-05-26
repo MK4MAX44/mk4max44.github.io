@@ -452,6 +452,33 @@ def make(path):
         c.drawString(408, dy + 5, text)
         dy -= 30
 
+    # Right panel — key method summary
+    kx = 350
+    c.setFillColor(BG3)
+    c.rect(kx, dy - 12, W - kx - 28, 19, fill=1, stroke=0)
+    c.setFillColor(BLUE)
+    c.rect(kx, dy - 12, 3, 19, fill=1, stroke=0)
+    c.setFillColor(BLUE)
+    c.setFont('KR', 10)
+    c.drawString(kx + 10, dy - 3, '핵심 방법론')
+    dy -= 32
+    method_items = [
+        (CYAN,   'SRL',    'AllenNLP SRLBert — 프레임 추출'),
+        (GREEN,  'XLNet',  '2단계 분류 — SKIP/KEEP → 5-class'),
+        (AMBER,  '역할',   '16가지 프라이버시 역할 매핑'),
+        (PURPLE, '증강',   'textaugment 동의어 대체 (소수 클래스)'),
+    ]
+    for mc, ml, mt in method_items:
+        c.setFillColor(mc)
+        c.roundRect(kx, dy - 1, 44, 15, 2, fill=1, stroke=0)
+        c.setFillColor(BG)
+        c.setFont('KR', 7.5)
+        c.drawCentredString(kx + 22, dy + 5, ml)
+        c.setFillColor(TEXT2)
+        c.setFont('KR', 10.5)
+        c.drawString(kx + 52, dy + 5, mt)
+        dy -= 26
+
     c.setFillColor(TEXT3)
     c.setFont('KR', 8)
     c.drawRightString(W - 28, 7, f'2 / {TOTAL}')
