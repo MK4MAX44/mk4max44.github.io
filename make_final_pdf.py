@@ -564,21 +564,23 @@ def make(path):
 
     # ── 9. Step 1: SRL 상세 ─────────────────────────────────────────
     slide(c, 'Step 1: SRL (Semantic Role Labeling) 상세', [
-        '사용 모델: AllenNLP SRLBert',
-        '--PropBank 코퍼스 기반 사전 학습 (약 50,000개 술어, 1,118개 동사)',
-        '--BERT 기반 → fine-tuning 없이 AllenNLP 제공 사전 학습 모델 그대로 사용',
-        '-->>AllenNLP: Allen Institute for AI가 개발한 NLP 연구용 오픈소스 라이브러리',
+        '===사용 모델: AllenNLP SRLBert — 왜 이걸 골랐나',
+        'PropBank 코퍼스 기반 사전 학습 (약 50,000개 술어, 1,118개 동사 커버)',
+        '--fine-tuning 없이 AllenNLP 제공 사전 학습 모델 그대로 사용',
+        '--이유: 개인정보처리방침의 동사("collect", "share", "use" 등)가 PropBank에 잘 정의돼 있음',
+        '-->>AllenNLP: Allen Institute for AI 개발 NLP 라이브러리. SRL·NER·공참조 해소 모델 제공',
         '',
-        '실제 예시 분석',
-        '--문장: "We may collect location information through cookies when you use our service"',
-        '--frame1 (include): [ARG2: location information] [V: include] [ARG1: IP address and GPS data]',
-        '--frame2 (use): [ARG0: you] [V: use] [ARG1: our service] → SKIP (개인정보 무관)',
+        '===실제 예시 — 문장 1개에서 프레임 3개 생성',
+        '"We may collect location info through cookies when you use our service"',
+        '--frame1 (include): [ARG1: IP address and GPS data] [V: include]',
+        '--frame2 (use): [ARG0: you] [V: use] [ARG1: our service] → Level1에서 SKIP 판정',
         '--frame3 (collect): [ARG0: We] [V: collect] [ARG1: location info] [ARGM-MNR: through cookies]',
+        '-->>ARGM-MNR: Manner(방법) 수식어. "쿠키를 통해"처럼 행위 방식. ARGM-TMP는 시간, ARGM-PRP는 목적',
         '',
-        '정량적 결과',
-        '--129,856개 정책 / 정책당 평균 306 프레임 / 총 39,702,767개 프레임 생성',
-        '--프레임 중 약 32%는 SKIP 프레임만 포함 (완전히 개인정보 무관 문장)',
-        '-->>ARGM-MNR: 방법(Manner) 수식어. "쿠키를 통해"처럼 행위 방식을 나타냄',
+        '===정량 결과 및 분포',
+        '129,856개 정책 / 정책당 평균 305.7 프레임 / 총 39,702,767개 프레임 생성',
+        '--학습 데이터(OPP-115): 10,717문장 → 48,783 프레임 → 146개 관련 동사 필터 → 13,946개',
+        '--전체 프레임 중 SKIP 약 74.5% / KEEP 약 25.5% → 대부분 문장이 개인정보와 직접 무관',
     ], 9)
 
     # ── 10. Step 2: 프레임 분류 ─────────────────────────────────────
