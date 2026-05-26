@@ -86,6 +86,13 @@ git fetch                   # 원격 변경사항 가져오기만 (합치지 않
 git push -u origin 브랜치명 # 처음 push 할 때 upstream 설정
 ```
 
+### 임시 저장
+
+```bash
+git stash                   # 작업 중인 변경사항 임시 저장
+git stash pop               # 저장해둔 변경사항 꺼내기
+```
+
 ### learngitbranching에서 배운 것들
 
 ```bash
