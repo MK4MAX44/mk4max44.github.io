@@ -585,22 +585,24 @@ def make(path):
 
     # ── 10. Step 2: 프레임 분류 ─────────────────────────────────────
     slide(c, 'Step 2: XLNet 2단계 분류기', [
-        '왜 2단계로 나눴나?',
-        '--학습 데이터에서 SKIP이 72.6%(10,401건) — 직접 6-class 분류 시 소수 클래스 학습 어려움',
-        '--Level1에서 SKIP/KEEP 먼저 분리 → Level2에서 5가지 카테고리만 집중 분류',
-        '-->>SKIP/KEEP: PolicyPulse의 1차 분류. SKIP은 개인정보와 무관한 프레임(ex. 서비스 이용 조건 등)',
+        '===왜 2단계로 나눴나? — 클래스 불균형 해결',
+        '학습 데이터에서 SKIP 72.6%(10,401건) / FPCU 10.2% / TPSC 8.8% / UCC 4.0% / UAED 1.3% / DR 1.1%',
+        '--6-class 직접 분류 시 UAED(182건)·DR(160건) 학습이 SKIP에 압도당함',
+        '--Level1에서 SKIP/KEEP 이진 분리 → Level2에서 5-class 집중 분류 (데이터 분포 균형 효과)',
+        '-->>클래스 불균형: 특정 클래스가 압도적으로 많을 때 모델이 해당 클래스에 편향되는 문제',
         '',
-        '5가지 KEEP 카테고리',
-        '--FPCU (First Party Collection/Use): 서비스 제공자가 직접 데이터 수집·사용',
-        '--TPSC (Third Party Sharing/Collection): 제3자와 데이터 공유 또는 제3자가 수집',
-        '--UCC (User Choice/Control): 사용자의 옵트인/옵트아웃 등 선택권',
-        '--UAED (User Access/Edit/Deletion): 사용자의 데이터 접근·수정·삭제 권리',
-        '--DR (Data Retention): 데이터 보존 기간',
+        '===5가지 KEEP 카테고리 정의',
+        'FPCU (First Party Collection/Use): 서비스 제공자가 직접 데이터 수집·사용 (가장 많음, 45%)',
+        '--TPSC (Third Party Sharing/Collection): 제3자와 공유 또는 제3자 수집 (17%)',
+        '--UCC (User Choice/Control): 사용자 옵트인·옵트아웃·설정 변경 권리 (13%)',
+        '--UAED (User Access/Edit/Deletion): 접근·수정·삭제 권리 → GDPR 핵심 (5%)',
+        '--DR (Data Retention): 데이터 보존 기간·방식 (5%)',
+        '-->>옵트아웃(Opt-out): 데이터 수집·활용 동의 철회. 옵트인(Opt-in)은 사전 동의 방식',
         '',
-        'XLNet을 선택한 이유',
-        '--순열 기반(permutation-based) 언어 모델링 → 양방향 문맥 + 자기회귀 특성 동시 보유',
-        '--사전 실험에서 BERT, SVM, Naive Bayes 대비 프레임 분류 성능 우수 확인',
-        '-->>옵트아웃: 데이터 수집·활용에 동의를 철회하는 행위. 반대는 옵트인(사전 동의)',
+        '===XLNet 학습 설정',
+        'base 모델 / batch size 16 / 6 epochs / 최대 시퀀스 길이 128 토큰',
+        '--검증 손실(validation loss) 기준 최적 epoch 모델 선택 (조기 종료 기준)',
+        '--사전 실험: BERT·SVM·Naive Bayes 모두 XLNet보다 F1 낮음 → XLNet 최종 채택',
     ], 10)
 
     # ── 11. TABLE I/II split ─────────────────────────────────────────
