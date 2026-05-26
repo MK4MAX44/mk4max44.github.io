@@ -138,6 +138,55 @@ git checkout -b side o/main      # 원격 브랜치 추적하는 새 브랜치 �
 
 ---
 
+## 알면 좋은 명령어
+
+### 저장소 시작 & 원격 연결
+
+```bash
+git init                            # 새 로컬 저장소 초기화
+git clone URL                       # 원격 저장소 복제
+git remote -v                       # 연결된 원격 저장소 목록 확인
+git remote add origin URL           # 원격 저장소 연결
+```
+
+### 로그 고급
+
+```bash
+git log --graph --oneline --all     # 브랜치 포함 전체 히스토리 그래프로 보기
+git log -p                          # 각 커밋의 변경 내용까지 같이 보기
+git show 커밋해시                   # 특정 커밋 상세 내용 보기
+git log --grep="키워드"             # 커밋 메시지 검색
+git blame 파일명                    # 각 줄을 누가 언제 수정했는지 확인
+```
+
+### 브랜치 관리
+
+```bash
+git branch -d 브랜치명              # 브랜치 삭제 (merge된 것만)
+git branch -D 브랜치명              # 브랜치 강제 삭제
+git branch -m 새이름                # 현재 브랜치 이름 변경
+git merge --no-ff 브랜치명          # fast-forward 없이 merge (히스토리 보존)
+```
+
+### stash 고급
+
+```bash
+git stash list                      # 저장된 stash 목록 확인
+git stash pop                       # 가장 최근 stash 꺼내기
+git stash drop                      # 가장 최근 stash 삭제
+git stash apply stash@{2}           # 특정 stash 적용 (삭제 안 함)
+```
+
+### 설정
+
+```bash
+git config --global user.name "이름"     # 커밋에 쓸 이름 설정
+git config --global user.email "이메일"  # 커밋에 쓸 이메일 설정
+git config --list                        # 현재 설정 전체 확인
+```
+
+---
+
 ## 느낀 점
 
 솔직히 말하면 git을 1년 넘게 쓰면서 브랜치*(작업을 독립적으로 나눠서 진행할 수 있는 줄기)* 를 제대로 써본 적이 거의 없었다. 그냥 main 하나에 다 올렸었는데, 이번에 공부하면서 왜 브랜치를 쓰는지, rebase랑 merge*(두 브랜치를 합치는 것)* 가 어떻게 다른지 조금은 감이 온 것 같다.
