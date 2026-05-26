@@ -716,11 +716,16 @@ def make(path):
         [220, 62, 62, 62, 62, 62, 62, 90], 16,
         note='★ 최종 채택. Level1 macro avg F1: 0.96 / Level2 macro avg F1: 0.98 / W.Avg = Weighted Average',
         extra=[
-            '===수치 해석',
-            'UAED와 DR: 학습 데이터 각 182·160건이지만 증강 + Two-Level로 F1 0.92 달성',
-            '--FSC Augmented에서 UAED 0.15 → 0.84로 급등: 데이터 증강이 결정적 역할',
-            '--Ensemble은 오히려 성능이 떨어지는 경우도 있음 → 구조적 접근(Two-Level)이 더 효과적',
-            'precision·recall 모두 각 카테고리에서 0.92 이상 → 과적합 없이 균형잡힌 성능',
+            '===핵심 수치 해석 — 왜 Two-Level이 압도적으로 좋은가',
+            'UAED: 학습 데이터 182건 → Frame only에서 F1 0.15 (사실상 학습 실패)',
+            '--FSC Augmented(증강): 0.15 → 0.84 (데이터 증강이 소수 클래스에 결정적)',
+            '--FSC Two-Level: 0.84 → 0.92 (2단계 구조가 추가로 8% 향상)',
+            '--Ensemble: 오히려 0.65로 하락 → 단순 앙상블은 불균형 문제 해결 못함',
+            '',
+            '===비교 관점 — 기존 도구와의 차이',
+            'Polisis 전체 F1 (OPP-115 기준): ~0.77 → PolicyPulse 0.97로 크게 앞섬',
+            '--하지만 단순 비교 주의: Polisis는 단락 분류, PolicyPulse는 프레임 분류 → 작업 범위 다름',
+            '-->>Weighted Average: 각 클래스의 샘플 수에 비례해 가중 평균한 F1. SKIP이 많아서 높게 나올 수 있음',
         ])
 
     # ── 17. TABLE III split ──────────────────────────────────────────
