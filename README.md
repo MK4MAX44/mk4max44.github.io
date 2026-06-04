@@ -8,6 +8,69 @@ A static blog template built with [Astro](https://astro.build).
 
 [**🖥️ Live Demo (Vercel)**](https://fuwari.vercel.app)
 
+## 📐 Planned Backend Architecture
+
+This project will be extended with a containerized backend stack for browser automation and API-driven task processing.
+
+### 1) Core stack
+
+- **Containerized architecture (Docker):** each service runs in its own container for reproducible local/dev/prod environments.
+- **Python + Playwright worker:** executes browser automation jobs and background scraping/interaction tasks.
+- **FastAPI REST server:** exposes APIs to create tasks, check task status, and retrieve results.
+- **PostgreSQL:** stores structured application data, task metadata, and result records.
+- **Redis:** handles task queueing and lightweight coordination between API and worker.
+- **VPS deployment:** all services run on a single VPS initially, with room to split services later.
+
+### 2) Service responsibilities
+
+- **FastAPI server**
+  - Validate incoming requests
+  - Create task records in Postgres
+  - Enqueue task IDs in Redis
+  - Return task IDs and status endpoints to clients
+- **Playwright worker**
+  - Consume task IDs from Redis
+  - Run browser automation with Playwright
+  - Persist structured outputs and logs to Postgres
+  - Mark task success/failure status
+- **Postgres**
+  - Source of truth for tasks and results
+  - Enables filtering, analytics, and audit history
+- **Redis**
+  - Fast queue transport for async job processing
+  - Decouples API latency from worker runtime
+
+### 3) Request flow
+
+1. Client calls FastAPI endpoint to submit a task.
+2. FastAPI writes task metadata to Postgres.
+3. FastAPI pushes task ID to Redis queue.
+4. Playwright worker pops task and runs browser automation.
+5. Worker saves results/status in Postgres.
+6. Client checks task status/result via FastAPI.
+
+### 4) Deployment plan on VPS
+
+- Use `docker compose` to run:
+  - `api` (FastAPI)
+  - `worker` (Python + Playwright)
+  - `postgres`
+  - `redis`
+- Configure environment variables for DB/Redis connection and secrets.
+- Add health checks and restart policies for basic reliability.
+- Use reverse proxy (e.g., Nginx) for HTTPS and routing to FastAPI.
+- Start with a single VPS and scale by separating worker/API when load increases.
+
+### 5) Suggested next implementation steps
+
+1. Scaffold `docker-compose.yml` with `api`, `worker`, `postgres`, and `redis`.
+2. Build minimal FastAPI endpoints:
+   - `POST /tasks`
+   - `GET /tasks/{task_id}`
+3. Implement Redis queue producer/consumer pattern.
+4. Add one end-to-end Playwright task and persist output to Postgres.
+5. Add basic observability (structured logs + task error tracing).
+
 ![Preview Image](https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png)
 
 🌏 README in
